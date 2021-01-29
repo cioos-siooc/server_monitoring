@@ -1,6 +1,6 @@
 
 prometheus_db/
 
-grafana_db/
-
 .env
+
+grafana_db/grafana.db
