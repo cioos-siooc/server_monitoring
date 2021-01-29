@@ -1,0 +1,6 @@
+
+prometheus_db/
+
+grafana_db/
+
+.env
