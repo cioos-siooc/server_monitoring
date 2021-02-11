@@ -9,6 +9,10 @@ services:
     image: prom/prometheus:latest
     container_name: prometheus
     user: "${USER_UID}"
+    deploy:
+      resources:
+        limits:
+          cpus: '0.25'
     volumes:
       - ./prometheus.yml:/etc/prometheus/prometheus.yml:z
       - ./prometheus_db:/var/lib/prometheus:z
@@ -29,11 +33,21 @@ services:
     image: prom/node-exporter
     ports:
       - '9100:9100'
+    deploy:
+      resources:
+        limits:
+          cpus: '0.25'
 
   cadvisor:
     image: google/cadvisor:latest
     ports:
       - '8082:8080'
+    deploy:
+      resources:
+        limits:
+          cpus: '0.25'
+    devices:
+      - /dev/kmsg:/dev/kmsg
     volumes:
       - /:/rootfs:ro
       - /var/run:/var/run:rw
@@ -54,6 +68,10 @@ services:
       - GF_SMTP_STARTTLS_POLICY
       - GF_SERVER_ROOT_URL
       - GF_SERVE_FROM_SUB_PATH
+    deploy:
+      resources:
+        limits:
+          cpus: '0.25'
     volumes:
       - ./grafana_db:/var/lib/grafana:z
     depends_on:
@@ -66,6 +84,10 @@ services:
     container_name: grok_exporter
     ports:
       - 9144:9144
+    deploy:
+      resources:
+        limits:
+          cpus: '0.25'
     volumes:
       - /var/log/httpd:/log
       - ./grok_exporter_config_path.yml:/grok/config.yml
@@ -74,6 +96,10 @@ services:
   geoip:
     image: greegorey/geoip-exporter
     container_name: geoip_exporter
+    deploy:
+      resources:
+        limits:
+          cpus: '0.25'
     volumes:
       - /etc/ssl/certs:/etc/ssl/certs:ro
     ports:
